@@ -13,11 +13,11 @@ volatile int btn_flag_green = 0;
 void btn_callback(uint gpio, uint32_t events ){
   if (events == 0x4) { // fall edge
     if (gpio == BTN_PIN_R)
-      btn_flag_red = !btn_flag_red;
+      btn_flag_red = 1;
   }
   else if (events == 0x8){
     if (gpio == BTN_PIN_G)
-    btn_flag_green = !btn_flag_green;
+    btn_flag_green = 1;
   }
 
 
@@ -46,9 +46,13 @@ int main() {
   while (true) {
     if(btn_flag_red){
       gpio_put(LED_PIN_R,!gpio_get(LED_PIN_R));
+      btn_flag_red = 0;
+
     }
     if(btn_flag_green){
       gpio_put(LED_PIN_G,!gpio_get(LED_PIN_G));
+      btn_flag_green = 0;
+
     }
   }
 }
